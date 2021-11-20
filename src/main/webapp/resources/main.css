@@ -1,0 +1,27 @@
+nav {
+    margin-bottom: 20px;
+}
+
+#search-input {
+    margin-bottom: -15px;
+}
+
+.add-view label {
+    margin-top: 10px;
+}
+
+.add-view button {
+    margin-top: 20px;
+}
+
+.remove-view label {
+    margin-top: 10px;
+}
+
+.remove-view select:last-child {
+    margin-top: 15px;
+}
+
+.remove-view button {
+    margin-top: 20px;
+}
