@@ -3,6 +3,9 @@ package com.maxtr.transport;
 import com.maxtr.transport.db.Database;
 import com.maxtr.transport.db.TransportTime;
 import com.maxtr.transport.db.TransportType;
+import com.maxtr.transport.template_engine.TemplateEngineUtil;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.WebContext;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,10 +33,12 @@ public class RemoveTransportServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
+        WebContext context = new WebContext(request, response, request.getServletContext());
+        response.setCharacterEncoding("utf-8");
         request.setAttribute("pageName", pageName);
         request.setAttribute("tableData", database.getAll());
-
-        request.getRequestDispatcher("/remove.jsp").forward(request, response);
+        engine.process("remove.html", context, response.getWriter());
     }
 
     @Override
@@ -45,6 +50,6 @@ public class RemoveTransportServlet extends HttpServlet {
         database.remove(elementID);
 
         request.setAttribute("status", "success");
-        request.getRequestDispatcher("/remove.jsp").forward(request, response);
+        doGet(request, response);
     }
 }

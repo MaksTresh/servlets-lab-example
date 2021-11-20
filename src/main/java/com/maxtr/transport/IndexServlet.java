@@ -3,6 +3,9 @@ package com.maxtr.transport;
 import com.maxtr.transport.db.Database;
 import com.maxtr.transport.db.TransportTime;
 import com.maxtr.transport.db.TransportType;
+import com.maxtr.transport.template_engine.TemplateEngineUtil;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.WebContext;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,8 +28,11 @@ public class IndexServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
+        WebContext context = new WebContext(request, response, request.getServletContext());
+        response.setCharacterEncoding("utf-8");
         request.setAttribute("tableData", database.getAll());
         request.setAttribute("pageName", pageName);
-        request.getRequestDispatcher("/index.jsp").forward(request, response);
+        engine.process("index.html", context, response.getWriter());
     }
 }

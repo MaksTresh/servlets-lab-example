@@ -29,7 +29,6 @@ public class ThymeleafConfig implements ServletContextListener {
 
     private ITemplateResolver templateResolver(ServletContext servletContext) {
         ServletContextTemplateResolver resolver = new ServletContextTemplateResolver(servletContext);
-        resolver.setPrefix ("/ WEB-INF /"); // Путь HTML должен быть отображен
         resolver.setCharacterEncoding("UTF-8");
         resolver.setTemplateMode(TemplateMode.HTML);
         return resolver;
